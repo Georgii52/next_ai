@@ -10,7 +10,7 @@ export async function POST (req) {
         const { text } = await req.json()
 
         const response = await openai.responses.create ({
-            model: 'gpt-4.1-2025-04-14',
+            model: 'gpt-5-nano',
             input: `Придумай анекдот с этими словами: ${text}. Можешь ответить только текстом анекдота.`
         })
         console.log (response)
