@@ -47,7 +47,7 @@ export default function Home() {
         value={inputValue}
         onChange={(e)=> setInputValue(e.target.value)}
         placeholder="Введите промпт"
-        className="border rounded-lg p-2 w-128 text-left"
+        className="border rounded-lg p-2 w-64 text-left"
       />
       <button 
         onClick={()=>{
