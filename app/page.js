@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react"
+import { Suspense } from "react";
 
 export default function Home() {
 
@@ -41,13 +42,13 @@ export default function Home() {
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen gap-4'>
-      <h1 className="text-2xl font-semibold">OpenAi API Тест</h1>
+      <h1 className="text-2xl font-semibold text-white">OpenAi API Тест</h1>
       <input 
         type="text"
         value={inputValue}
         onChange={(e)=> setInputValue(e.target.value)}
-        placeholder="Введите промпт"
-        className="border rounded-lg p-2 w-64 text-left"
+        placeholder="Напишите что-то..."
+        className="border border-gray-300 rounded-lg p-2 w-64 text-left focus:border-sky-300 focus:ring-2 focus:ring-sky-200 focus:ring-opacity-55 outline-none transition-all duration-500 ease-in-out text-white"
       />
       <button 
         onClick={()=>{
