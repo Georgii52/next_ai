@@ -11,7 +11,7 @@ export async function POST (req) {
 
         const response = await openai.responses.create ({
             model: 'gpt-4.1-2025-04-14',
-            input: `Придумай анекдот вот с этими словами: ${text}`
+            input: `Придумай анекдот с этими словами: ${text}. Можешь ответить только текстом анекдота.`
         })
         console.log (response)
         const message = response.output_text
