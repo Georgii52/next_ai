@@ -67,7 +67,9 @@ export default function Home() {
         </p>
       )}
       {response && (
-        <p className="flex px-64 mt-4 text-lg text-gray-700 whitespace-pre-wrap text-center">{response}</p>
+        <div className="w-full max-w-md w-full px-4 text-center">
+          <p className="text-gray-800 whitespace-pre-wrap break-words">{response}</p>
+        </div>
       )}
     </main>
   )
