@@ -55,6 +55,7 @@ export default function Home() {
           onChange={(e)=> setInputValue(e.target.value)}
           placeholder="Напишите что-то..."
           className="
+          text-black
           bg-white border border-white rounded-xl w-full p-3
           ml-5 mt-2 mb-5
           outline-none transition-all duration-500 ease-in-out
