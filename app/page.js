@@ -1,13 +1,15 @@
 'use client'
-import { useState } from "react"
-import { Suspense } from "react";
-import { Send, Loader2, Eraser } from 'lucide-react'
+import { useEffect, useState } from "react"
+import { Send, Loader2, Eraser, } from 'lucide-react'
+import Table from "./ui/table";
 
 export default function Home() {
+  const [data, setData] = useState([])
   const [inputValue, setInputValue] = useState("");
   const [outputValue, setOutputValue] = useState("");
   const [response, setResponse] = useState("")
   const [loading, setLoading] = useState(false)
+  
 
   const handleSubmit = ()=> {
     setOutputValue(inputValue)
@@ -19,6 +21,25 @@ export default function Home() {
     setInputValue('')
     setResponse('')
   }
+
+  const fetchData = async () => {
+    setLoading (true)
+    try{
+      const res = await fetch ('/api/postgres', {
+        method: 'GET',
+        headers: { 'Content-Type':'application/json' }
+        })
+      const data = await res.json()
+      setData (data)
+      } catch (err) {
+        console.error (`Ошибка: ${err}`)
+      } finally {
+        setLoading(false)
+      }
+  }
+  useEffect (() => {
+    fetchData()
+  }, [])
 
   const sendToAi = async () => {
     setLoading (true)
@@ -57,7 +78,7 @@ export default function Home() {
           className="
           text-black
           bg-white border border-white rounded-xl w-full p-3
-          ml-5 mt-2 mb-5
+          ml-5 
           outline-none transition-all duration-500 ease-in-out
           hover:border-sky-300 focus:border-sky-300
           hover:ring-2 focus:ring-2
@@ -65,35 +86,36 @@ export default function Home() {
           hover:ring-opacity-60 focus:ring-opacity-60
           "
         />
-        <button 
+        <button
           onClick={()=>{
             handleSubmit()
             sendToAi()
           }}
           disabled={loading}
           className="
-          bg-blue-500 text-white px-4 py-2 rounded-xl cursor-pointer
-          ml-2 mt-2 mr-5 mb-5
+          bg-blue-500 text-white px-4 rounded-xl cursor-pointer
+          ml-2 mr-2
           hover:bg-blue-600
           transition-all ease-in-out duration-300
           disabled:bg-blue-200 disabled
-          disabled: cursor-not-allowed"
+          disabled:cursor-not-allowed"
           >
           {loading ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
         </button>
-      </div>
-      <button 
-        onClick={()=>handleClear()}
-        className="flex flex-row items-center justify-center
-        bg-red-400 text-white px-4 py-2 rounded-xl
-        hover:bg-red-500
-        transition-all ease-in-out duration-300 cursor-pointer"
-        >
-          Очистить <Eraser className="m-1" size={18} />
-        </button> 
+        <button
+          onClick={()=>handleClear()}
+          className="
+          bg-red-400 text-white px-4 rounded-xl cursor-pointer
+          mr-4
+          hover:bg-red-500
+          transition-all ease-in-out duration-300"
+          >
+          <Eraser className="" size={18} />
+          </button> 
+        </div>
       {outputValue && (
-        <p className="mt-4 text-lg text-white">
-          Вы ввели: <span className="font-medium">{outputValue}</span>
+        <p className="m-1 text-lg text-white">
+          Вы ввели: <span className="">{outputValue}</span>
         </p>
       )}
       {response && (
@@ -101,6 +123,7 @@ export default function Home() {
           <p className="text-white text-lg whitespace-pre-wrap break-words m-5">{response}</p>
         </div>
       )}
+      <Table data={data} onRefresh={fetchData}/>
     </main>
   )
 }
