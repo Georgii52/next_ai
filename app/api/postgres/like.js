@@ -10,7 +10,7 @@ async function updateLik (unit) {
     WHERE id = ${unit.id}
     RETURNING *
     `
-    return data
+    return data[0]
 }
 
 export async function updateLikes (){

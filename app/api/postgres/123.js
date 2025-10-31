@@ -1,5 +1,5 @@
-import { updateLikes } from "./updateLikes";
-import { updateDislikes } from "./updateDislikes";
+import { updateLikes } from "./like";
+import { updateDislikes } from "./dislike";
 import { getAll } from "./route";
 
 export async function POST(req) {
