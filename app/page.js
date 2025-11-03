@@ -66,7 +66,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className='flex flex-col items-center justify-center min-h-screen gap-4 my-16'>
+    <main className= "flex flex-col items-center justify-center min-h-screen gap-4 my-16">
       <h1 className="text-2xl font-semibold text-white">Генератор анекдотов</h1>
       <div className="flex flex-row w-full md:w-192">
         <input 

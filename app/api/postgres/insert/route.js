@@ -12,6 +12,6 @@ export async function insertData(sent, recieved) {
         return NextResponse.json({ success: true })
     } catch (err) {
         console.log (err)
-        return NextResponse.json({ error: err }, { status: err.status})
+        return NextResponse.json({ error: err }, { status: err.status })
     }
 }

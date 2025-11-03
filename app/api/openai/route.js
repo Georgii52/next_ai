@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAi from 'openai'
-import { insertData } from "../insert/route";
+import { insertData } from "../postgres/insert/route";
 
 const openai = new OpenAi ({
     apiKey: process.env.OPENAI_API_KEY
