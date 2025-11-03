@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAi from 'openai'
-import insertData from "../postgres/insert";
+import { insertData } from "../insert/route";
 
 const openai = new OpenAi ({
     apiKey: process.env.OPENAI_API_KEY
@@ -18,9 +18,9 @@ export async function POST(req) {
         const message = response.output_text
 
         insertData (text, response)
-        return NextResponse.json ({ reply: message }) || `Нет ответа`
+        return NextResponse.json ({ reply: message })
     } catch (err) {
-        console.error (`Ошибка в запросе: ${err}`)
-        return NextResponse.json ({ err: "Ошибка в запросе"}, { status: 500})
+        console.log(err.error.message, err.status)
+        return NextResponse.json ({ err: err.error.message, status: err.status })
     }
 }

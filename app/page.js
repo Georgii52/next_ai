@@ -9,7 +9,6 @@ export default function Home() {
   const [outputValue, setOutputValue] = useState("");
   const [response, setResponse] = useState("")
   const [loading, setLoading] = useState(false)
-  
 
   const handleSubmit = ()=> {
     setOutputValue(inputValue)
@@ -30,16 +29,13 @@ export default function Home() {
         headers: { 'Content-Type':'application/json' }
         })
       const data = await res.json()
-      setData (data)
+      setData (data.data)
       } catch (err) {
         console.error (`Ошибка: ${err}`)
       } finally {
         setLoading(false)
       }
   }
-  useEffect (() => {
-    fetchData()
-  }, [])
 
   const sendToAi = async () => {
     setLoading (true)
@@ -56,7 +52,7 @@ export default function Home() {
           body: JSON.stringify({ text: inputValue })
         })
         const data = await res.json()
-        setResponse(data.reply || 'Нет Ответа')
+        setResponse(data.reply || `Status: ${data.status}, ${data.err} `)
       } catch (err) {
           console.error (err)
           setResponse (`Ошибка при запросе`)
@@ -65,6 +61,9 @@ export default function Home() {
       }
     }
 }
+  useEffect (() => {
+    fetchData()
+  }, [])
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen gap-4 my-16'>

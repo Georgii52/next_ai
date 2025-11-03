@@ -1,5 +1,4 @@
 import { ThumbsUp, ThumbsDown, Loader } from 'lucide-react'
-import { refresh } from 'next/cache'
 import { useState } from 'react'
 
 export default function Table ({ data, onRefresh }) {
@@ -81,7 +80,7 @@ export default function Table ({ data, onRefresh }) {
             items-center
             justify-center
             rounded-4xl
-            text-lg
+            text-xl
             ">Загружаем приколы...<Loader className='animate-spin m-2' size={28}/></p>):
             (
                 data.map((item)=>(
