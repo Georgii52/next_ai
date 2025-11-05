@@ -1,5 +1,6 @@
 import { ThumbsUp, ThumbsDown, Loader } from 'lucide-react'
 import { useState } from 'react'
+import { TableSkeleton } from './skeletons'
 
 export default function Table ({ data, onRefresh }) {
 
@@ -74,14 +75,7 @@ export default function Table ({ data, onRefresh }) {
             rounded-4xl
             outline-none
         ">
-            {data.length === 0 ? (<p className="
-            flex
-            bg-gray-300 text-black
-            items-center
-            justify-center
-            rounded-4xl
-            text-xl
-            ">Загружаем приколы...<Loader className='animate-spin m-2' size={28}/></p>):
+            {data.length === 0 ? (<TableSkeleton/>):
             (
                 data.map((item)=>(
                 <div key={item.id} className="

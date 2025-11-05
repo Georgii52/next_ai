@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { Send, Loader2, Eraser, } from 'lucide-react'
 import { Analytics } from '@vercel/analytics/next'
 import Table from "./ui/table";
+import { TableSkeleton } from "./ui/skeletons";
 
 export default function Home() {
   const [data, setData] = useState([])
