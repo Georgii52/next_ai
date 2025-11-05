@@ -124,6 +124,7 @@ export default function Home() {
         </div>
       )}
       <Table data={data} onRefresh={fetchData}/>
+      <Analytics />
     </main>
   )
 }
