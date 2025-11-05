@@ -75,20 +75,22 @@ export default function Table ({ data, onRefresh }) {
             rounded-4xl
             outline-none
         ">
-            {data.length === 0 ? (<TableSkeleton/>):
+            {data.length === 0 ? (<div className='animate-fade-out'><TableSkeleton/></div>):
             (
                 data.map((item)=>(
                 <div key={item.id} className="
+                animate-fade-in
                 flex flex-row flex-wrap
                 text-black whitespace-pre-wrap text-base
                 items-center justify-between p-4 m-2
                 bg-gray-300
                 rounded-4xl
+                shadow-sm hover:shadow-md
                 transition-all duration-200 ease-in-out
                 outline-none
                 hover:bg-gray-200
                 ">
-                    <p className="m-2">Промпт: {item.initial_prompt}</p>
+                    <p className="m-2 ">Промпт: {item.initial_prompt}</p>
                     <p className="m-2 max-w-[80%]">{item.text}</p>
                     <div className="
                     flex flex-row justify-center items-center
