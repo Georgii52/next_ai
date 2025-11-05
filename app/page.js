@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react"
 import { Send, Loader2, Eraser, } from 'lucide-react'
+import { Analytics } from '@vercel/analytics/next'
 import Table from "./ui/table";
 
 export default function Home() {
