@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useState, Suspense } from "react"
+import { useEffect, useState } from "react"
 import { Send, Loader2, Eraser, } from 'lucide-react'
 import { Analytics } from '@vercel/analytics/next'
 import Table from "./ui/table";
+import { Dialogue } from "./ui/dialogue";
 
 export default function Home() {
   const [data, setData] = useState([])
@@ -13,7 +14,7 @@ export default function Home() {
 
   const handleSubmit = ()=> {
     setOutputValue(inputValue)
-    setInputValue("")
+    
   }
 
   const handleClear = () => {
@@ -42,7 +43,6 @@ export default function Home() {
     setLoading (true)
     setResponse ('')
     if (inputValue === '') {
-      setResponse ('Пожалуйста, введите что-то')
       setLoading (false)
       return
     } else {
@@ -50,7 +50,7 @@ export default function Home() {
         const res = await fetch('/api/openai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: inputValue })
+          body: JSON.stringify({ text:inputValue })
         })
         const data = await res.json()
         setResponse(data.reply || `Status: ${data.status}, ${data.err} `)
@@ -67,7 +67,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className= "flex flex-col items-center justify-center min-h-screen gap-4 my-16">
+    <main className= "flex flex-col items-center justify-center min-h-screen gap-4 mt-24">
       <h1 className="text-2xl font-semibold text-white">Генератор анекдотов</h1>
       <div className="flex flex-row w-full md:w-192">
         <input 
@@ -89,7 +89,7 @@ export default function Home() {
         <button
           onClick={()=>{
             handleSubmit()
-            sendToAi()
+            // sendToAi()
           }}
           disabled={loading}
           className="
@@ -113,16 +113,13 @@ export default function Home() {
           <Eraser className="" size={18} />
           </button> 
         </div>
-      {outputValue && (
-        <p className="m-1 text-lg text-white">
-          Вы ввели: <span className="">{outputValue}</span>
-        </p>
-      )}
-      {response && (
+        <Dialogue outputValue={outputValue} response={response}/>
+        
+      
         <div className="flex flex-row w-full md:w-192">
-          <p className="text-white text-lg whitespace-pre-wrap break-words m-5">{response}</p>
+          <p className="text-white text-lg whitespace-pre-wrap break-words m-5"></p>
         </div>
-      )}
+      
       <Table data={data} onRefresh={fetchData}/>
       <Analytics />
     </main>

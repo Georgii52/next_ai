@@ -63,14 +63,14 @@ export default function Table ({ data, onRefresh }) {
     return (
         <div className="
         flex flex-col
-        w-full px-6
+        w-full px-4
         flex-wrap
         "> <p className="flex flex-row align-center justify-center m-0 pb-1 text-2xl text-white">Наши Анекдоты:</p>
             <div className="
             flex flex-col flex-wrap
             text-white
             w-full
-            bg-gray-400
+            bg-sky-200/70
             p-2
             rounded-4xl
             outline-none
@@ -83,12 +83,12 @@ export default function Table ({ data, onRefresh }) {
                 flex flex-row flex-wrap
                 text-black whitespace-pre-wrap text-base
                 items-center justify-between p-4 m-2
-                bg-gray-300
+                bg-gray-200/90
                 rounded-4xl
-                shadow-sm hover:shadow-md
+                shadow-lg hover:shadow-xl
                 transition-all duration-200 ease-in-out
                 outline-none
-                hover:bg-gray-200
+                hover:bg-gray-100/90
                 ">
                     <p className="m-2 ">Промпт: {item.initial_prompt}</p>
                     <p className="m-2 max-w-[80%]">{item.text}</p>
