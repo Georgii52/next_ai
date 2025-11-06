@@ -16,7 +16,7 @@ export async function POST(req) {
         })
         const message = response.output_text
         try {
-            insertData (text, response)
+           await insertData (text, response)
         } catch (err) {
             console.error (err)
         }
