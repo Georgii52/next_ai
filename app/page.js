@@ -89,7 +89,7 @@ export default function Home() {
         <button
           onClick={()=>{
             handleSubmit()
-            // sendToAi()
+            sendToAi()
           }}
           disabled={loading}
           className="
