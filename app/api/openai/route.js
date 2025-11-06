@@ -14,10 +14,12 @@ export async function POST(req) {
             model:'gpt-5-nano',
             input: `Придумай анекдот с этими словами: ${text}. Можешь ответить только текстом анекдота.`
         })
-        console.log (response)
         const message = response.output_text
-
-        insertData (text, response)
+        try {
+            insertData (text, response)
+        } catch (err) {
+            console.error (err)
+        }
         return NextResponse.json ({ reply: message })
     } catch (err) {
         console.log(err.error.message, err.status)
