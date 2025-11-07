@@ -1,41 +1,45 @@
 import { useEffect, useState } from "react"
+import { Loader2 } from "lucide-react"
 
-export function Dialogue ({ outputValue, response }) {
+export function Dialogue ({ outputValue, response, loadingResponse }) {
 
     const [outputStream, setOutputStream] = useState('')
     const [responseStream, setResponseStream] = useState('')
 
     useEffect(() => {
-        if (!outputValue) return
-        setOutputStream('')
-        const chars = Array.from(String(outputValue))
-        let i=0;
-        const interval = setInterval(()=>{
-            if (i < chars.length) {
-                setOutputStream((prev) => prev + chars[i])
-                i++
-            } else {
-                clearInterval(interval)
+        if (!outputValue) return;
+        const text = String(outputValue)
+        let isCancelled = false
+
+        async function streamText () {
+            setOutputStream('') 
+            for (let char in text) {
+                if(isCancelled) break
+                setOutputStream(prev => prev + text[char])
+                await new Promise(resolve => setTimeout(resolve, 40))
             }
-        }, 50)
-        return () => clearInterval(interval)
-    }, [outputValue])
+        }
+        streamText()
+        return ()=>{isCancelled=true}
+        }, [outputValue])
 
     useEffect(() => {
-  if (!response) return
-  const chars = Array.from(String(response))
-  setResponseStream('')
-  let i = 0
-  const interval = setInterval(() => {
-    if (i < chars.length) {
-      setResponseStream(prev => prev + chars[i])
-      i++
-    } else {
-      clearInterval(interval)
-    }
-  }, 30)
-  return () => clearInterval(interval)
-}, [response])
+        if (!response) return
+        const text = String(response)
+        console.log (text)
+        let isCancelled = false
+
+        async function streamText () {
+            setResponseStream('')
+            for (let char in text) {
+                if(isCancelled) break
+                setResponseStream(prev => prev + text[char])
+                await new Promise(resolve => setTimeout(resolve, 40))
+            }
+        }
+        streamText()
+        return () => {isCancelled=true}
+    }, [response])
 
     return(
         <div className="
@@ -49,26 +53,53 @@ export function Dialogue ({ outputValue, response }) {
             rounded-4xl
             gap-4
             ">
-                <div className="
+                {!outputValue ? (<div className="
                 flex flex-row flex-wrap justify-center items-center
                 bg-gray-200/90 text-black
                 p-4 ml-auto rounded-4xl rounded-br-none
                 min-w-[20%]
                 max-w-[85%] shadow-lg
-                break-words whitespace-pre-wrap
+                break-all whitespace-pre-wrap
+                transition-all duration-500
                 ">
-                    <p className="p-1">{outputStream}</p>
+                    <span className="animate-pulse">Ждём ввод</span>
                 </div>
-                <div className="
+                ):
+                (<div className="
+                flex flex-row flex-wrap justify-center items-center
+                bg-gray-200/90 text-black
+                p-4 ml-auto rounded-4xl rounded-br-none
+                min-w-[20%]
+                max-w-[85%] shadow-lg
+                break-all whitespace-pre-wrap
+                ">
+                    <span className="">{outputStream}</span>
+                </div>)}
+                {loadingResponse ? (<div className="
+                transition-all duration-700 ease-in-out
+                flex flex-row flex-wrap justify-center items-center
+                bg-gray-200/90 text-black
+                p-4 mr-auto rounded-4xl rounded-bl-none
+                min-w-[40%]
+                max-w-[85%] shadow-lg
+                break-all whitespace-pre-wrap
+                ">
+                    <span className="flex items-center gap-2">
+                        <span className="typing">Думаем над ответом</span>
+                    </span>
+                </div>
+                ):
+                response ? (<div className="
+                transition-all duration-1000 ease-in-out
                 flex flex-row flex-wrap justify-center items-center
                 bg-gray-200/90 text-black
                 p-4 mr-auto rounded-4xl rounded-bl-none
                 min-w-[20%]
                 max-w-[85%] shadow-lg
-                break-words whitespace-pre-wrap
+                break-all whitespace-pre-wrap
                 ">
-                    <p className="p-1">{responseStream}В лаборатории на столе лежит кнопка с надписью «Кнопка». Учёный говорит ассистенту: «Нажми — начнём эксперимент». Ассистент нажимает. Ничего не происходит. Через секунду экран: «Не нажимай меня слишком часто — я устала». Все смеются: кнопка устала от кликов и просит работать по расписанию.</p>
-                </div>
+                    <span className="p-1">{responseStream}</span>
+                </div>) : <></>}
             </div>
         </div>
     )

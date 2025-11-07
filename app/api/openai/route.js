@@ -16,10 +16,10 @@ export async function POST(req) {
         })
         const message = response.output_text
         try {
-           await insertData (text, response)
+           insertData (text, response)
            console.log ('DB OK')
         } catch (err) {
-            console.error (err)
+           console.error (err)
         }
         return NextResponse.json ({ reply: message })
     } catch (err) {

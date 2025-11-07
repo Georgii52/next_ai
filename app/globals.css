@@ -72,3 +72,20 @@ body {
 .animate-fade-in {
   animation: fade-in 0.5s
 }
+
+@keyframes typing-dots {
+  0% {content: ''}
+  20% {content: '.';}
+  40% {content: '..';}
+  60% {content: '...';}
+  80% {content: '....';}
+  100% {content: '';}
+}
+.typing {
+  width: 10.7rem;
+}
+.typing::after {
+  display: inline-block;
+  animation: typing-dots 2s infinite steps(1, end);
+  content: '';
+}

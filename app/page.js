@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { Send, Loader2, Eraser, } from 'lucide-react'
 import { Analytics } from '@vercel/analytics/next'
 import Table from "./ui/table";
@@ -11,10 +11,10 @@ export default function Home() {
   const [outputValue, setOutputValue] = useState("");
   const [response, setResponse] = useState("")
   const [loading, setLoading] = useState(false)
+  const [loadingResponse, setLoadingResponse] = useState(false)
 
   const handleSubmit = ()=> {
     setOutputValue(inputValue)
-    
   }
 
   const handleClear = () => {
@@ -31,7 +31,7 @@ export default function Home() {
         headers: { 'Content-Type':'application/json' }
         })
       const data = await res.json()
-      setData (data.data)
+      setData (data.data ?? [])
       } catch (err) {
         console.error (`Ошибка: ${err}`)
       } finally {
@@ -41,8 +41,10 @@ export default function Home() {
 
   const sendToAi = async () => {
     setLoading (true)
+    setLoadingResponse(true)
     setResponse ('')
     if (inputValue === '') {
+      setResponse ('Пожалуйста, введите что-то')
       setLoading (false)
       return
     } else {
@@ -50,7 +52,7 @@ export default function Home() {
         const res = await fetch('/api/openai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text:inputValue })
+          body: JSON.stringify({ text: inputValue })
         })
         const data = await res.json()
         setResponse(data.reply || `Status: ${data.status}, ${data.err} `)
@@ -59,15 +61,19 @@ export default function Home() {
           setResponse (`Ошибка при запросе`)
       } finally {
         setLoading (false)
+        setLoadingResponse (false)
       }
     }
 }
   useEffect (() => {
     fetchData()
   }, [])
+  useEffect (() => {
+    fetchData()
+  }, [response])
 
   return (
-    <main className= "flex flex-col items-center justify-center min-h-screen gap-4 mt-24">
+    <main className= "flex flex-col items-center justify-center min-h-screen gap-4 my-16">
       <h1 className="text-2xl font-semibold text-white">Генератор анекдотов</h1>
       <div className="flex flex-row w-full md:w-192">
         <input 
@@ -91,6 +97,7 @@ export default function Home() {
             handleSubmit()
             sendToAi()
           }}
+          title='Отправить'
           disabled={loading}
           className="
           bg-blue-500 text-white px-4 rounded-xl cursor-pointer
@@ -104,6 +111,7 @@ export default function Home() {
         </button>
         <button
           onClick={()=>handleClear()}
+          title='Очистить всё'
           className="
           bg-red-400 text-white px-4 rounded-xl cursor-pointer
           mr-4
@@ -113,13 +121,7 @@ export default function Home() {
           <Eraser className="" size={18} />
           </button> 
         </div>
-        <Dialogue outputValue={outputValue} response={response}/>
-        
-      
-        <div className="flex flex-row w-full md:w-192">
-          <p className="text-white text-lg whitespace-pre-wrap break-words m-5"></p>
-        </div>
-      
+        <Dialogue outputValue={outputValue} response={response} loadingResponse={loadingResponse}/>
       <Table data={data} onRefresh={fetchData}/>
       <Analytics />
     </main>
