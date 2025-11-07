@@ -59,7 +59,7 @@ export function Dialogue ({ outputValue, response, loadingResponse }) {
                 p-4 ml-auto rounded-4xl rounded-br-none
                 min-w-[20%]
                 max-w-[85%] shadow-lg
-                break-all whitespace-pre-wrap
+                break-words whitespace-pre-wrap
                 transition-all duration-500
                 ">
                     <span className="animate-pulse">Ждём ввод</span>
@@ -71,7 +71,7 @@ export function Dialogue ({ outputValue, response, loadingResponse }) {
                 p-4 ml-auto rounded-4xl rounded-br-none
                 min-w-[20%]
                 max-w-[85%] shadow-lg
-                break-all whitespace-pre-wrap
+                break-words whitespace-pre-wrap
                 ">
                     <span className="">{outputStream}</span>
                 </div>)}
@@ -82,9 +82,9 @@ export function Dialogue ({ outputValue, response, loadingResponse }) {
                 p-4 mr-auto rounded-4xl rounded-bl-none
                 min-w-[40%]
                 max-w-[85%] shadow-lg
-                break-all whitespace-pre-wrap
+                break-words whitespace-pre-wrap
                 ">
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-left justify-center gap-2">
                         <span className="typing">Думаем над ответом</span>
                     </span>
                 </div>
@@ -96,7 +96,7 @@ export function Dialogue ({ outputValue, response, loadingResponse }) {
                 p-4 mr-auto rounded-4xl rounded-bl-none
                 min-w-[20%]
                 max-w-[85%] shadow-lg
-                break-all whitespace-pre-wrap
+                break-words whitespace-pre-wrap
                 ">
                     <span className="p-1">{responseStream}</span>
                 </div>) : <></>}
