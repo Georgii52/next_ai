@@ -77,14 +77,13 @@ export function Dialogue ({ outputValue, response, loadingResponse }) {
                 </div>)}
                 {loadingResponse ? (<div className="
                 transition-all duration-700 ease-in-out
-                flex flex-row flex-wrap justify-center items-center
+                flex flex-row flex-wrap justify-start
                 bg-gray-200/90 text-black
                 p-4 mr-auto rounded-4xl rounded-bl-none
-                min-w-[40%]
-                max-w-[85%] shadow-lg
+                w-[13rem] shadow-lg
                 break-words whitespace-pre-wrap
                 ">
-                    <span className="flex items-left justify-center gap-2">
+                    <span className="">
                         <span className="typing">Думаем над ответом</span>
                     </span>
                 </div>

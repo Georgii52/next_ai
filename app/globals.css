@@ -81,11 +81,8 @@ body {
   80% {content: '....';}
   100% {content: '';}
 }
-.typing {
-  width: 10.7rem;
-}
+
 .typing::after {
-  display: inline-block;
   animation: typing-dots 2s infinite steps(1, end);
   content: '';
 }

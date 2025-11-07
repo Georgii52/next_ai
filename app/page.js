@@ -15,6 +15,7 @@ export default function Home() {
 
   const handleSubmit = ()=> {
     setOutputValue(inputValue)
+    setInputValue('')
   }
 
   const handleClear = () => {
@@ -120,8 +121,8 @@ export default function Home() {
           >
           <Eraser className="" size={18} />
           </button> 
-        </div>
-        <Dialogue outputValue={outputValue} response={response} loadingResponse={loadingResponse}/>
+      </div>
+      <Dialogue outputValue={outputValue} response={response} loadingResponse={loadingResponse}/>
       <Table data={data} onRefresh={fetchData}/>
       <Analytics />
     </main>
