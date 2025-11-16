@@ -7,7 +7,6 @@ export function TableSkeleton () {
             items-center justify-between p-4 m-2
             shimmer
             bg-gray-300 rounded-4xl
-            
             ">
                 <div className="
                 min-w-[35%]
@@ -24,7 +23,6 @@ export function TableSkeleton () {
                 rounded-4xl
                 shadow-sm">
                 </div>
-                <div></div>
         </div>
         ))
     )

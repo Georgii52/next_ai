@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Loader2 } from "lucide-react"
+import MessageBar from "./messageBar"
 
 export function Dialogue ({ outputValue, response, loadingResponse }) {
 
@@ -49,10 +49,11 @@ export function Dialogue ({ outputValue, response, loadingResponse }) {
         ">
             <div className="
             flex flex-col flex-wrap justify-between
-            bg-sky-200/70 px-4 py-6 w-full
+            bg-sky-200/70 px-4 py-4
             rounded-4xl
             gap-4
             ">
+                <MessageBar />
                 {!outputValue ? (<div className="
                 flex flex-row flex-wrap justify-center items-center
                 bg-gray-200/90 text-black

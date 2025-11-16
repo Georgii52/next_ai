@@ -1,9 +1,10 @@
 'use client'
-import { useEffect, useState, Suspense } from "react"
-import { Send, Loader2, Eraser, } from 'lucide-react'
+import { useEffect, useState, useRef } from "react"
+import { Send, Loader2, Eraser, MessageSquare, ArrowBigUpDash, Construction } from 'lucide-react'
 import { Analytics } from '@vercel/analytics/next'
 import Table from "./ui/table";
 import { Dialogue } from "./ui/dialogue";
+import MessageForm from "./ui/messageForm";
 
 export default function Home() {
   const [data, setData] = useState([])
@@ -12,6 +13,15 @@ export default function Home() {
   const [response, setResponse] = useState("")
   const [loading, setLoading] = useState(false)
   const [loadingResponse, setLoadingResponse] = useState(false)
+  const targetRef = useRef(null)
+
+  const handleScroll = () => {
+    targetRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+  
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth'})
+  }
 
   const handleSubmit = ()=> {
     setOutputValue(inputValue)
@@ -45,8 +55,9 @@ export default function Home() {
     setLoadingResponse(true)
     setResponse ('')
     if (inputValue === '') {
-      setResponse ('Пожалуйста, введите что-то')
+      alert ('Пожалуйста, введите что-то')
       setLoading (false)
+      setLoadingResponse(false)
       return
     } else {
       try {
@@ -74,8 +85,22 @@ export default function Home() {
   }, [response])
 
   return (
-    <main className= "flex flex-col items-center justify-center min-h-screen gap-4 my-16">
-      <h1 className="text-2xl font-semibold text-white">Генератор анекдотов</h1>
+    <main className= "flex flex-col items-center justify-center min-h-screen my-8 gap-3 my-4">
+      <button onClick={handleScrollTop} className="
+      fixed bottom-6 right-6 z-50
+      bg-gray-200 rounded-full
+      p-2 shadow-lg
+      transition-transform duration-200 ease-out
+      hover:bg-gray-300 hover:translate-y-[-3px]
+      cursor-pointer"><ArrowBigUpDash size={28}/></button>
+      <div className="flex items-center justify-between w-full px-4 md:w-192 text-2xl font-semibold text-white">
+        <h1 className="ml-2">Генератор анекдотов</h1>
+        <button onClick={handleScroll} className="
+          ml-auto
+          bg-green-600 text-white p-4 rounded-xl cursor-pointer
+          hover:bg-green-500
+          transition-all ease-in-out duration-300"><MessageSquare className='fill-transparent hover:fill-white transition duration-200' size={18} /></button>
+      </div>
       <div className="flex flex-row w-full md:w-192">
         <input 
           type="text"
@@ -86,10 +111,10 @@ export default function Home() {
           text-black
           bg-white border border-white rounded-xl w-full p-3
           ml-5 
-          outline-none transition-all duration-500 ease-in-out
+          outline-none transition-all duration-300 ease-in-out
           hover:border-sky-300 focus:border-sky-300
-          hover:ring-2 focus:ring-2
-          hover:ring-sky-200 focus:ring-sky-200 
+          hover:ring-4 focus:ring-2
+          hover:ring-sky-600 focus:ring-sky-200 
           hover:ring-opacity-60 focus:ring-opacity-60
           "
         />
@@ -119,12 +144,26 @@ export default function Home() {
           hover:bg-red-500
           transition-all ease-in-out duration-300"
           >
-          <Eraser className="" size={18} />
+          <Eraser size={18} />
           </button> 
       </div>
       <Dialogue outputValue={outputValue} response={response} loadingResponse={loadingResponse}/>
       <Table data={data} onRefresh={fetchData}/>
       <Analytics />
+      <div className="w-full flex flex-col items-center justify-center">
+        <p className="
+        text-black rounded-4xl p-4 text-xl
+        absolute z-50
+        flex flex-row gap-2 items-center
+        bg-gray-200/90
+        "><Construction className='text-orange-400' size={34}/>
+        Work in progress
+        <Construction className='text-orange-400' size={34}/>
+        </p>
+        <div ref={targetRef} className="blur-xl w-full">
+          <MessageForm />
+        </div>
+      </div>
     </main>
   )
 }

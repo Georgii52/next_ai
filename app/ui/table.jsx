@@ -1,4 +1,4 @@
-import { ThumbsUp, ThumbsDown, Loader } from 'lucide-react'
+import { ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useState } from 'react'
 import { TableSkeleton } from './skeletons'
 
